@@ -24,12 +24,20 @@ def index():
 
 @app.route("/download", methods=["POST"])
 def download():
+    cookies = os.getenv("YTDLP_COOKIES")
+    if cookies:
+      with open("cookies.txt", "w", encoding="utf-8") as f:
+          f.write(cookies)
+
     url = request.form["url"]
     quality = request.form["quality"]
 
     file_id = str(uuid.uuid4())
     output_template = os.path.join(DOWNLOAD_FOLDER, f"{file_id}.%(ext)s")
-    ydl_opts = {"outtmpl": output_template}
+    ydl_opts = {
+      "outtmpl": output_template,
+      "cookiefile": "cookies.txt",  
+    }
     if quality == "best":
      ydl_opts["format"] = "best"
     elif quality == "bestaudio":
@@ -56,6 +64,7 @@ def download():
 if __name__ == "__main__":
   port = int(os.environ.get("PORT", 5000))
   app.run(host="0.0.0.0", port=port, debug=True)
+
 
 
 
