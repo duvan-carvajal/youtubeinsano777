@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YouTube Downloader</title>
+</head>
+<body>
+  <h2>Descargar Video de YouTube</h2>
+  <form action="/download" method="POST">
+    <label for="url">URL del video:</label><br>
+    <input type="text" name="url" required><br><br>
+
+    <label for="quality">Calidad:</label><br>
+    <select name="quality">
+      <option value="best">Mejor calidad</option>
+      <option value="bestaudio">Solo audio</option>
+    </select><br><br>
+
+    <button type="submit">Descargar</button>
+  </form>
+</body>
+</html>
