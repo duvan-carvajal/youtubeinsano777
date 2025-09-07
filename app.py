@@ -24,10 +24,13 @@ def index():
 
 @app.route("/download", methods=["POST"])
 def download():
-    cookies = os.getenv("YTDLP_COOKIES")
-    if cookies:
-      with open("cookies.txt", "w", encoding="utf-8") as f:
-          f.write(cookies)
+    cookies_content = os.getenv("YTDLP_COOKIES")
+    cookies_file = None
+    if cookies_content:
+        tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".txt")
+        tmp.write(cookies_content.encode())
+        tmp.close()
+        cookies_file = tmp.name
 
     url = request.form["url"]
     quality = request.form["quality"]
@@ -64,6 +67,7 @@ def download():
 if __name__ == "__main__":
   port = int(os.environ.get("PORT", 5000))
   app.run(host="0.0.0.0", port=port, debug=True)
+
 
 
 
