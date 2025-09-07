@@ -2,21 +2,95 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>YouTube Downloader</title>
+  <title>YouTubeInsano777</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="iconito.png" type="image/png">
+  <style>
+    body{
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+    }
+    #formm{      
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40vh;
+      margin: 0;
+    }
+
+    form {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      font-size: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 30vh;
+      margin: 0;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #6C63FF;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #574fd6;
+      transform: scale(1.05);
+    }
+
+    label {
+      font-weight: 500;
+      color: #555;
+    }
+
+
+  </style>
 </head>
 <body>
-  <h2>Descargar Video de YouTube</h2>
+  <h2>Youtube Insano 777</h2>
+  <div id="formm">
   <form action="/download" method="POST">
     <label for="url">URL del video:</label><br>
     <input type="text" name="url" required><br><br>
 
-    <label for="quality">Calidad:</label><br>
+    <label for="quality">Tipo:</label><br>
     <select name="quality">
-      <option value="best">Mejor calidad</option>
-      <option value="bestaudio">Solo audio</option>
+      <option value="best">Video</option>
+      <option value="bestaudio">Audio</option>
     </select><br><br>
 
     <button type="submit">Descargar</button>
   </form>
+  </div>
 </body>
 </html>
