@@ -7,6 +7,7 @@ from tkinter import filedialog
 import platform
 
 app = Flask(__name__)
+
 if platform.system() == "Windows":
     DOWNLOAD_FOLDER = os.path.join(os.path.expanduser("~"), "Downloads")
 elif platform.system() == "Darwin":  # macOS
@@ -24,13 +25,10 @@ def index():
 
 @app.route("/download", methods=["POST"])
 def download():
-    cookies_content = os.getenv("YTDLP_COOKIES")
-    cookies_file = None
-    if cookies_content:
-        tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".txt")
-        tmp.write(cookies_content.encode())
-        tmp.close()
-        cookies_file = tmp.name
+    cookies = os.getenv("YTDLP_COOKIES")
+    if cookies:
+        with open("cookies.txt", "w", encoding="utf-8") as f:
+            f.write(cookies)
 
     url = request.form["url"]
     quality = request.form["quality"]
@@ -38,23 +36,23 @@ def download():
     file_id = str(uuid.uuid4())
     output_template = os.path.join(DOWNLOAD_FOLDER, f"{file_id}.%(ext)s")
     ydl_opts = {
-      "outtmpl": output_template,
-      "cookiefile": "cookies.txt",  
+        "outtmpl": output_template,
+        "cookiefile": "cookies.txt",  
     }
+
     if quality == "best":
-     ydl_opts["format"] = "best"
+        ydl_opts["format"] = "best"
     elif quality == "bestaudio":
-     ydl_opts["format"] = "bestaudio"
-    
+        ydl_opts["format"] = "bestaudio"
     else:
-     print("invalid choice. Defaulting to best quality.")
-     ydl_opts["format"] = "best"
+        print("invalid choice. Defaulting to best quality.")
+        ydl_opts["format"] = "best"
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-      info = ydl.extract_info(url, download=True)
-      downloaded_file = ydl.prepare_filename(info)
-      print("Archivo descargado:", downloaded_file)
-      print("Existe?:", os.path.exists(downloaded_file))
+        info = ydl.extract_info(url, download=True)
+        downloaded_file = ydl.prepare_filename(info)
+        print("Archivo descargado:", downloaded_file)
+        print("Existe?:", os.path.exists(downloaded_file))
 
     if os.path.exists(downloaded_file):
         return send_file(
@@ -63,12 +61,7 @@ def download():
             download_name=os.path.basename(downloaded_file)  # fuerza nombre correcto
         )
     return "Error jaja"
-   
+
 if __name__ == "__main__":
-  port = int(os.environ.get("PORT", 5000))
-  app.run(host="0.0.0.0", port=port, debug=True)
-
-
-
-
-
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
